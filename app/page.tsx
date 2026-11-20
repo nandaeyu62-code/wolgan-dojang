@@ -1,37 +1,11 @@
 'use client';
 import {useState, type FormEvent} from 'react';
 import HeroSlider from './hero-slider';
+import WorkGallery from './work-gallery';
 const phone = process.env.NEXT_PUBLIC_CONTACT_PHONE?.trim() || '010-3425-5139';
 const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim();
-const categories = ['전체', '기계 도장', '설비 도장', '보수 도장'];
-const examples = [
- {category:'기계 도장',title:'작업의 중심에, 새로운 색',description:'산업용 기계 외관 도장',color:'blue'},
- {category:'설비 도장',title:'현장의 설비를 더 단정하게',description:'금속 설비 외관 도장',color:'orange'},
- {category:'보수 도장',title:'오래 쓴 기계의 다음 시작',description:'노후 도장면 보수',color:'green'},
-];
-function Machine({old=false}:{old?:boolean}) {return <svg viewBox="0 0 700 430" fill="none" role="img" aria-label={old?'도장 전 기계 예시 일러스트':'도장 후 기계 예시 일러스트'}>
- <defs><linearGradient id={old?'old':'new'} x1="120" y1="100" x2="600" y2="370" gradientUnits="userSpaceOnUse"><stop stopColor={old?'#8c8275':'#e6edf0'}/><stop offset="1" stopColor={old?'#5f5d56':'#8fa6b4'}/></linearGradient></defs>
- <ellipse cx="358" cy="377" rx="280" ry="27" fill="#081421" fillOpacity=".36"/>
- <path d="M102 160 173 111H573L623 152V346L548 389H144L102 350Z" fill={old?'#68665d':'#657f91'}/>
- <path d="M102 160H548V389H144L102 350Z" fill={`url(#${old?'old':'new'})`}/>
- <path d="M548 160 623 152V346L548 389Z" fill={old?'#504e48':'#466173'}/>
- <path d="M102 160 173 111H573L623 152H548Z" fill={old?'#aaa18e':'#f2f5f7'}/>
- <rect x="125" y="183" width="301" height="137" rx="4" fill="#192c39"/>
- <rect x="139" y="197" width="273" height="108" fill="#304958"/>
- <path d="M149 286H399M149 279H399" stroke="#8b9ca2" strokeWidth="7"/>
- <path d="M189 211V264H229V225H345" stroke="#9daeb4" strokeWidth="19"/>
- <ellipse cx="347" cy="225" rx="17" ry="31" fill="#d8e1e3"/><ellipse cx="347" cy="225" rx="7" ry="17" fill="#677c86"/>
- <path d="M153 203 205 298M204 203 256 298" stroke="#d9eff7" strokeOpacity=".12" strokeWidth="18"/>
- <rect x="438" y="180" width="88" height="140" rx="4" fill={old?'#847560':'#ed702e'}/>
- <rect x="450" y="194" width="63" height="44" rx="3" fill="#152d3a"/><path d="M459 211H478M459 219H500" stroke="#86b9a2" strokeWidth="3"/>
- <circle cx="463" cy="259" r="7" fill="#e0e6e6"/><circle cx="491" cy="259" r="7" fill="#e0e6e6"/><circle cx="478" cy="294" r="10" fill="#d13f36"/>
- <path d="M130 340H422" stroke={old?'#4c4b43':'#6d8590'} strokeWidth="3"/><path d="M156 356H393" stroke={old?'#4c4b43':'#6d8590'} strokeWidth="3"/>
- <path d="M567 197 600 188M567 209 600 200M567 221 600 212M567 233 600 224" stroke="#203b4c" strokeWidth="5"/>
- <rect x="158" y="382" width="54" height="13" rx="3" fill="#1a2d39"/><rect x="475" y="382" width="54" height="13" rx="3" fill="#1a2d39"/>
- {old&&<g fill="#78553d" opacity=".7"><path d="m128 171 50 4-15 12-30-5ZM308 332l50 5-10 15-42-8ZM525 329l-9 42-16-7 3-29Z"/><path d="m188 128 27 3-5 11-35-2ZM145 359l25 6-8 10-21-8Z"/></g>}
- </svg>}
 export default function Home(){
- const [menu,setMenu]=useState(false); const [filter,setFilter]=useState('전체'); const [notice,setNotice]=useState('');
+ const [menu,setMenu]=useState(false); const [notice,setNotice]=useState('');
  function downloadInquiry(event:FormEvent<HTMLFormElement>){event.preventDefault(); const data=new FormData(event.currentTarget); const content=`월간도장 견적 상담 요청\n\n담당자: ${data.get('name')}\n연락처: ${data.get('contact')}\n작업 종류: ${data.get('service')}\n작업 내용:\n${data.get('message')}\n`;
  const blob=new Blob(['\uFEFF'+content],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob); const link=document.createElement('a');link.href=url;link.download='월간도장-상담내용.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);setNotice('상담 내용을 파일로 저장했습니다. 업체에 전송된 것은 아닙니다.'); }
  return <>
@@ -41,7 +15,7 @@ export default function Home(){
  <section className="hero"><HeroSlider/><a className="hero-phone" href={`tel:${phone.replace(/[^+\d]/g,'')}`} aria-label={`월간도장 전화 상담 ${phone}`}><span className="hero-phone-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7.1 3.5H4.8c-.7 0-1.3.6-1.3 1.3 0 8.7 7 15.7 15.7 15.7.7 0 1.3-.6 1.3-1.3v-2.3c0-.6-.4-1.1-1-1.3l-3-.7c-.4-.1-.9 0-1.2.4l-1.3 1.5a13.4 13.4 0 0 1-6.8-6.8l1.5-1.3c.4-.3.5-.8.4-1.2l-.7-3c-.2-.6-.7-1-1.3-1Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg></span><span className="hero-phone-copy"><span className="hero-phone-label">월간도장 · 전화 상담</span><strong>{phone}</strong></span></a><div className="hero-grid wrap"><div className="hero-copy"><p className="eyebrow">A NEW COAT. A NEW CHAPTER.</p><h1>기계에 새 색을,<br/>현장에 <span>새 가치를.</span></h1><p className="hero-description">시간이 쌓인 기계에도<br/>새로운 시작은 필요하니까.<br/>기계·설비 도장, 월간도장입니다.</p><div className="hero-buttons"><a href="#contact" className="button">내 작업 상담하기</a><a href="#services" className="text-link">도장 서비스 살펴보기</a></div><div className="hero-caption"><span>기계·설비 도장</span><i/> <span>표면부터 마감까지</span></div></div></div><div className="hero-strip"><div className="wrap"><span>색을 입히는 일, 그 이상의 변화.</span><span>MACHINERY <b>·</b> EQUIPMENT <b>·</b> REFINISHING</span></div></div></section>
  <section className="intro wrap section" id="about"><div><p className="eyebrow dark">ABOUT WOLGAN</p><h2>익숙한 기계를<br/>새로운 시선으로.</h2></div><div className="intro-copy"><p className="lead">현장을 움직이는 기계.<br/>그 다음 모습을 함께 고민합니다.</p><p>월간도장은 기계와 설비의 도장을 소개하는 브랜드입니다. 작업할 대상과 표면 상태, 원하는 색상과 일정을 바탕으로 필요한 작업을 상담합니다.</p><div className="principles"><span>대상에 맞는 준비</span><span>차분한 작업 과정</span><span>단정한 마감</span></div></div></section>
  <section className="services section" id="services"><div className="wrap"><div className="section-heading"><div><p className="eyebrow dark">OUR SERVICES</p><h2>어떤 도장이 필요하세요?</h2></div><p>작업 대상부터 알려주세요.<br/>세부 범위와 가능 여부는 상담으로 확인합니다.</p></div><div className="service-grid">{[{icon:'▦',name:'기계 도장',text:'기계의 외관과 사용 환경을 고려한 도장 상담',tags:'산업용 기계 · 금속 외장'},{icon:'▤',name:'설비 도장',text:'현장 설비의 표면 상태에 맞춘 작업 상담',tags:'금속 설비 · 프레임'},{icon:'◒',name:'보수 도장',text:'벗겨짐과 변색 등 기존 도장면의 보수 상담',tags:'노후 도장면 · 부분 보수'}].map(s=><article key={s.name} className="service"><span className="service-icon" aria-hidden="true">{s.icon}</span><h3>{s.name}</h3><p>{s.text}</p><div>{s.tags}</div><a href="#contact">작업 상담하기</a></article>)}</div></div></section>
- <section className="section wrap" id="work"><div className="section-heading"><div><p className="eyebrow dark">A LOOK AT THE POSSIBILITIES</p><h2>달라질 모습을 그려보세요.</h2></div><p>아래 이미지는 작업 유형을 설명하는 일러스트이며,<br/>실제 시공 사례가 아닙니다.</p></div><div className="filters" role="group" aria-label="작업 유형 필터">{categories.map(c=><button aria-pressed={c===filter} onClick={()=>setFilter(c)} key={c}>{c}</button>)}</div><div className="work-grid">{examples.filter(item=>filter==='전체'||item.category===filter).map(item=><article className="work-card" key={item.category}><div className={`work-art ${item.color}`}><span>ILLUSTRATION</span><Machine/></div><p className="work-category">{item.category}</p><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></section>
+ <WorkGallery/>
  <section className="process section"><div className="wrap"><div className="section-heading"><div><p className="eyebrow">HOW WE START</p><h2>좋은 작업의 시작은<br/>충분한 대화입니다.</h2></div><p>사진 한 장과 간단한 설명으로<br/>상담에 필요한 내용을 준비해보세요.</p></div><div className="process-grid">{[['작업 대상 확인','기계·설비의 종류와 현재 상태를 살펴봅니다.'],['범위와 일정 상담','도장할 부위, 색상, 현장 조건을 이야기합니다.'],['작업 내용 협의','준비와 마감 범위를 확인하고 일정을 협의합니다.'],['마감 상태 확인','협의한 작업 범위와 마감 상태를 확인합니다.']].map(([title,text],i)=><article key={title}><span className="step-dot" aria-hidden="true"/><p className="step-label">{['CONSULT','PLAN','PAINT','CHECK'][i]}</p><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
  <section className="section wrap faq"><div><p className="eyebrow dark">BEFORE YOU ASK</p><h2>상담 전, 궁금한 점.</h2></div><div>{[['어떤 내용을 준비하면 좋을까요?','기계 또는 설비의 전체 사진과 도장할 부분의 사진, 대략적인 크기, 작업 지역, 희망 일정을 준비해주세요.'],['사진만으로 견적을 받을 수 있나요?','사진은 상담의 출발점입니다. 표면 상태와 작업 환경에 따라 추가 확인이 필요할 수 있으며, 최종 범위와 금액은 상담 후 정합니다.'],['원하는 색상으로 상담할 수 있나요?','원하는 색상이나 색상표 번호가 있다면 함께 알려주세요. 도료와 대상 소재에 따른 적용 가능 여부를 상담으로 확인합니다.']].map(([q,a])=><details key={q}><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>
  <section className="contact section" id="contact"><div className="wrap contact-grid"><div><p className="eyebrow dark">LET’S TALK ABOUT YOUR NEXT COAT</p><h2>새로운 색의 시작,<br/>월간도장과 함께.</h2><p>어떤 기계인지, 어디를 바꾸고 싶은지.<br/>생각하고 계신 작업을 적어주세요.</p><div className="contact-info">{phone?<a href={`tel:${phone.replace(/[^+\d]/g,'')}`}>{phone}</a>:<strong>상담 연락처 등록 준비 중</strong>}{email&&<a href={`mailto:${email}`}>{email}</a>}<p>{email?'작성한 파일을 이메일에 첨부해 보내주세요.':'현재 온라인 접수는 운영하지 않습니다. 작성 내용은 내 기기에만 저장됩니다.'}</p></div></div><form onSubmit={downloadInquiry}><h3>상담 내용 미리 작성하기</h3><div className="form-row"><label>담당자 / 업체명<input name="name" placeholder="성함 또는 업체명" required maxLength={100} autoComplete="organization"/></label><label>연락처<input name="contact" placeholder="전화번호 또는 이메일" required maxLength={150}/></label></div><label>작업 종류<select name="service"><option>기계 도장</option><option>설비 도장</option><option>보수 도장</option><option>상담 후 결정</option></select></label><label>작업 내용<textarea name="message" rows={4} required maxLength={3000} placeholder="작업 대상, 지역, 대략적인 크기와 희망 일정을 적어주세요."/></label><p className="form-note">입력한 내용은 서버로 전송되지 않습니다.</p><button className="button" type="submit">상담 내용 파일로 저장</button><p role="status" className="form-status">{notice}</p></form></div></section>
