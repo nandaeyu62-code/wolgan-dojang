@@ -25,12 +25,12 @@ export default function HeroSlider(){
  const toggle=()=>{if(paused) slider.current?.autoplay.start(); else slider.current?.autoplay.stop();setPaused(!paused);};
  return <div className="hero-photo-gallery" role="region" aria-label="기계·설비 사진 슬라이드">
   <Swiper modules={[Autoplay,A11y,Keyboard,Pagination]} loop speed={600}
-   autoplay={{delay:3000,disableOnInteraction:false,pauseOnMouseEnter:true}}
+   autoplay={{delay:3000,disableOnInteraction:false}}
    keyboard={{enabled:true,onlyInViewport:true}} pagination={{clickable:true}}
    a11y={{prevSlideMessage:'이전 사진',nextSlideMessage:'다음 사진',paginationBulletMessage:'{{index}}번 사진 보기'}}
    onSwiper={instance=>{slider.current=instance;if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)instance.autoplay.stop();}}
    onSlideChange={instance=>setActive(instance.realIndex)}>
-   {photos.map((alt,index)=><SwiperSlide key={alt}><div className="hero-photo"><Image src={`/hero/machine-${index+1}.webp`} alt={alt} fill sizes="(max-width: 700px) 100vw, 55vw" priority={index===0} style={{objectFit:'cover'}}/></div></SwiperSlide>)}
+   {photos.map((alt,index)=><SwiperSlide key={alt}><div className="hero-photo"><Image src={`/hero/machine-${index+1}.webp`} alt={alt} fill sizes="100vw" priority={index===0} style={{objectFit:'cover'}}/></div></SwiperSlide>)}
   </Swiper>
   <div className="photo-controls"><div><span className="photo-kicker">MACHINE & EQUIPMENT</span><p>{photos[active]}</p></div><div className="photo-actions"><span className="photo-count">{String(active+1).padStart(2,'0')} / 09</span><button type="button" onClick={()=>slider.current?.slidePrev()} aria-label="이전 사진">이전</button><button type="button" onClick={toggle} aria-label={paused?'자동 재생 시작':'자동 재생 일시정지'}>{paused?'재생':'정지'}</button><button type="button" onClick={()=>slider.current?.slideNext()} aria-label="다음 사진">다음</button></div></div>
  </div>;
