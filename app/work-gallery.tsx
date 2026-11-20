@@ -21,7 +21,7 @@ export default function WorkGallery(){
  const current=filtered[selected]||filtered[0];
  const move=(direction:number)=>setSelected(index=>(index+direction+filtered.length)%filtered.length);
  const open=(index:number)=>{setSelected(index);dialog.current?.showModal();};
- return <section className="section wrap" id="work"><div className="section-heading"><div><p className="eyebrow dark">OUR WORK IN PICTURES</p><h2>사진으로 보는 작업 현장.</h2></div><p>기계와 설비의 다양한 모습을 살펴보세요.<br/>사진을 누르면 크게 볼 수 있습니다.</p></div>
+ return <section className="section wrap" id="work"><div className="section-heading"><div><p className="eyebrow dark">OUR WORK IN PICTURES</p><h2 className="display-title">WOLGAN<br/><span>WORK GALLERY</span></h2></div><p>기계와 설비의 다양한 모습을 살펴보세요.<br/>사진을 누르면 크게 볼 수 있습니다.</p></div>
  <div className="filters" role="group" aria-label="작업사진 유형">{categories.map(c=><button key={c} aria-pressed={c===filter} onClick={()=>setFilter(c)}>{c}</button>)}</div>
  <div className="work-grid">{filtered.map((photo,index)=><article className="work-card" key={photo.id}><button className="work-photo" type="button" onClick={()=>open(index)} aria-label={`${photo.title} 사진 크게 보기`}><Image src={`/hero/machine-${photo.id}.webp`} alt={photo.title} fill sizes="(max-width:700px) 100vw, 33vw" style={{objectFit:'cover'}}/><span className="work-photo-hint">크게 보기</span></button><p className="work-category">{photo.category}</p><h3>{photo.title}</h3></article>)}</div>
  <dialog ref={dialog} className="work-dialog" aria-label="작업사진 크게 보기" onClick={event=>{if(event.target===event.currentTarget)dialog.current?.close();}} onKeyDown={event=>{if(event.key==='ArrowLeft'){event.preventDefault();move(-1);}if(event.key==='ArrowRight'){event.preventDefault();move(1);}}}>
