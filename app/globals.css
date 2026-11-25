@@ -59,3 +59,6 @@ footer{background:#141719;color:#fff;padding-top:65px}.footer-inner .brand{font-
 .intro-copy>p:not(.lead){max-width:none;font-size:22px;line-height:1.9}
 .intro .principles{flex-wrap:wrap;font-size:18px;gap:12px 22px}
 @media(max-width:700px){.intro .eyebrow{font-size:13px}.intro h2{font-size:clamp(32px,8.5vw,42px)}.intro-copy .lead{font-size:26px}.intro-copy>p:not(.lead){font-size:20px;line-height:1.85}.intro .principles{font-size:17px}}
+
+/* Match navigation labels to the consultation button size. */
+#navigation>a:not(.button){font-size:15px;font-weight:800}
