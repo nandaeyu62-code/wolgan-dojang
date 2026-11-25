@@ -62,3 +62,7 @@ footer{background:#141719;color:#fff;padding-top:65px}.footer-inner .brand{font-
 
 /* Match navigation labels to the consultation button size. */
 #navigation>a:not(.button){font-size:15px;font-weight:800}
+
+/* Enlarge the header brand name by 1.5 times. */
+header .brand{font-size:37.5px}
+@media(max-width:700px){header .brand{font-size:33px}}
