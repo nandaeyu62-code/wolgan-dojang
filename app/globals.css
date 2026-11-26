@@ -73,3 +73,6 @@ header .brand{font-size:37.5px}
 /* Enlarge the hero contact number by 1.5 times. */
 .hero-phone strong{font-size:34.5px}
 @media(max-width:380px){.hero-phone{margin-left:12px;margin-right:12px;padding:10px 14px}.hero-phone-icon{display:none}}
+
+/* Center the contact section after removing the inquiry form. */
+.contact-details{text-align:center}.contact-details .contact-info{margin-left:auto;margin-right:auto}
