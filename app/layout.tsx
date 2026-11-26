@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   images: ['/hero/machine-1.webp'],
  },
  verification: {
-  google: process.env.GOOGLE_SITE_VERIFICATION?.trim() || undefined,
+  google: process.env.GOOGLE_SITE_VERIFICATION?.trim() || 'McON44N8hswjCcq1uTqwboSDAMWMt4nUBdZHWECIcZo',
   other: process.env.NAVER_SITE_VERIFICATION?.trim()
    ? { 'naver-site-verification': process.env.NAVER_SITE_VERIFICATION.trim() }
    : undefined,
