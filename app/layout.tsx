@@ -16,9 +16,9 @@ export const metadata: Metadata = {
  },
  verification: {
   google: process.env.GOOGLE_SITE_VERIFICATION?.trim() || 'McON44N8hswjCcq1uTqwboSDAMWMt4nUBdZHWECIcZo',
-  other: process.env.NAVER_SITE_VERIFICATION?.trim()
-   ? { 'naver-site-verification': process.env.NAVER_SITE_VERIFICATION.trim() }
-   : undefined,
+  other: {
+   'naver-site-verification': process.env.NAVER_SITE_VERIFICATION?.trim() || '213df3ac986ebea13a5a72fa7f7f381f1d9d99c8',
+  },
  },
 };
 
